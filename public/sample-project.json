@@ -1,0 +1,90 @@
+[
+  {
+    "id": "task-demo-1",
+    "name": "Project Planning",
+    "description": "Define project scope, objectives, and deliverables",
+    "startDate": "2025-11-07",
+    "endDate": "2025-11-14",
+    "dependencies": [],
+    "status": "completed",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-2",
+    "name": "Requirements Gathering",
+    "description": "Collect and document all project requirements from stakeholders",
+    "startDate": "2025-11-10",
+    "endDate": "2025-11-20",
+    "dependencies": ["task-demo-1"],
+    "status": "completed",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-3",
+    "name": "Design Architecture",
+    "description": "Create system architecture and database design",
+    "startDate": "2025-11-15",
+    "endDate": "2025-11-25",
+    "dependencies": ["task-demo-2"],
+    "status": "in-progress",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-4",
+    "name": "UI/UX Design",
+    "description": "Design user interface mockups and prototypes",
+    "startDate": "2025-11-18",
+    "endDate": "2025-11-28",
+    "dependencies": ["task-demo-2"],
+    "status": "in-progress",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-5",
+    "name": "Backend Development",
+    "description": "Implement API endpoints and business logic",
+    "startDate": "2025-11-25",
+    "endDate": "2025-12-15",
+    "dependencies": ["task-demo-3"],
+    "status": "not-started",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-6",
+    "name": "Frontend Development",
+    "description": "Build user interface components and pages",
+    "startDate": "2025-11-28",
+    "endDate": "2025-12-18",
+    "dependencies": ["task-demo-4"],
+    "status": "not-started",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-7",
+    "name": "Integration Testing",
+    "description": "Test API and frontend integration",
+    "startDate": "2025-12-15",
+    "endDate": "2025-12-25",
+    "dependencies": ["task-demo-5", "task-demo-6"],
+    "status": "not-started",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  },
+  {
+    "id": "task-demo-8",
+    "name": "Deployment",
+    "description": "Deploy application to production environment",
+    "startDate": "2025-12-25",
+    "endDate": "2025-12-28",
+    "dependencies": ["task-demo-7"],
+    "status": "not-started",
+    "createdAt": "2025-11-07T00:00:00.000Z",
+    "updatedAt": "2025-11-07T00:00:00.000Z"
+  }
+]
