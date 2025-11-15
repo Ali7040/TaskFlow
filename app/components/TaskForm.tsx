@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Task } from '../types';
-import { X, Calendar as CalendarIcon, FileText, Tag, Sparkles } from 'lucide-react';
+import { X, Calendar as CalendarIcon, FileText, Tag, Sparkles, User, Image as ImageIcon, Upload, X as XIcon } from 'lucide-react';
 import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -26,7 +26,13 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
     endDate: task?.endDate || new Date().toISOString().split('T')[0],
     dependencies: task?.dependencies || [],
     status: task?.status || 'not-started' as const,
+    assignedTo: task?.assignedTo || '',
+    completionImage: task?.completionImage || '',
   });
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(task?.completionImage || null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
 
   const [startDate, setStartDate] = useState<Date | undefined>(
     task?.startDate ? new Date(task.startDate) : new Date()
@@ -39,6 +45,16 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
 
   // Available tasks for dependencies (exclude current task if editing)
   const availableTasks = allTasks.filter(t => t.id !== task?.id);
+
+  // Initialize image preview when task changes
+  useEffect(() => {
+    if (task?.completionImage) {
+      setImagePreview(task.completionImage);
+      setFormData(prev => ({ ...prev, completionImage: task.completionImage || '' }));
+    } else {
+      setImagePreview(null);
+    }
+  }, [task?.completionImage]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -63,7 +79,58 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleImageUpload = async (file: File): Promise<string | null> => {
+    setIsUploadingImage(true);
+    try {
+      // Convert image to base64 for now (in production, upload to cloud storage)
+      const reader = new FileReader();
+      return new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          resolve(base64String);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    } catch (error) {
+      toast.error('Failed to process image');
+      return null;
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB');
+      return;
+    }
+
+    setImageFile(file);
+    const imageUrl = await handleImageUpload(file);
+    if (imageUrl) {
+      setImagePreview(imageUrl);
+      setFormData(prev => ({ ...prev, completionImage: imageUrl }));
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    setFormData(prev => ({ ...prev, completionImage: '' }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Update formData with selected dates
     const updatedFormData = {
@@ -190,6 +257,21 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
               </div>
             </div>
 
+            {/* Assigned To */}
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2 text-sm font-semibold">
+                <User className="w-4 h-4 text-blue-600" />
+                Assigned To
+              </Label>
+              <Input
+                type="text"
+                value={formData.assignedTo}
+                onChange={e => setFormData({ ...formData, assignedTo: e.target.value })}
+                placeholder="Enter user email or name..."
+              />
+              <p className="text-xs text-gray-500">Assign this task to a team member</p>
+            </div>
+
             {/* Status */}
             <div className="space-y-3">
               <Label className="flex items-center gap-2 text-sm font-semibold">
@@ -222,6 +304,54 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
                 ))}
               </div>
             </div>
+
+            {/* Completion Image - Only show when status is completed */}
+            {formData.status === 'completed' && (
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2 text-sm font-semibold">
+                  <ImageIcon className="w-4 h-4 text-blue-600" />
+                  Completion Image
+                </Label>
+                {imagePreview ? (
+                  <div className="relative">
+                    <img
+                      src={imagePreview}
+                      alt="Completion"
+                      className="w-full h-48 object-cover rounded-lg border-2 border-gray-200"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleRemoveImage}
+                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                    >
+                      <XIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                      id="image-upload"
+                      disabled={isUploadingImage}
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="cursor-pointer flex flex-col items-center gap-2"
+                    >
+                      <Upload className="w-8 h-8 text-gray-400" />
+                      <span className="text-sm text-gray-600">
+                        {isUploadingImage ? 'Uploading...' : 'Upload completion image'}
+                      </span>
+                      <span className="text-xs text-gray-400">Max 5MB</span>
+                    </label>
+                  </div>
+                )}
+                <p className="text-xs text-gray-500">Add an image to show task completion (visible to clients)</p>
+              </div>
+            )}
 
             {/* Dependencies */}
             {availableTasks.length > 0 && (

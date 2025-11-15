@@ -3,7 +3,7 @@
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import { Task } from '../types';
-import { Calendar, Clock, CheckCircle2, Circle, PlayCircle } from 'lucide-react';
+import { Calendar, Clock, CheckCircle2, Circle, PlayCircle, Image as ImageIcon } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface TaskNodeData {
@@ -85,6 +85,29 @@ const TaskNode = memo(({ data }: NodeProps<TaskNodeData>) => {
             <span className="font-semibold text-purple-700">{format(new Date(task.endDate), 'MMM dd, yyyy')}</span>
           </div>
         </div>
+
+        {/* Completion Image */}
+        {task.status === 'completed' && task.completionImage && (
+          <div className="mt-3 rounded-lg overflow-hidden border-2 border-green-200 shadow-md">
+            <img
+              src={task.completionImage}
+              alt="Task completion"
+              className="w-full h-32 object-cover"
+            />
+            <div className="bg-green-50 px-2 py-1 flex items-center gap-1.5">
+              <ImageIcon className="w-3.5 h-3.5 text-green-600" />
+              <span className="text-xs font-medium text-green-700">Completion Proof</span>
+            </div>
+          </div>
+        )}
+
+        {/* Assigned To */}
+        {task.assignedTo && (
+          <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded-lg">
+            <span className="font-medium">Assigned:</span>
+            <span className="text-gray-700">{task.assignedTo}</span>
+          </div>
+        )}
 
         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
           <span className={`text-xs font-semibold ${config.color} px-2 py-1 rounded-full ${config.bg}`}>

@@ -6,6 +6,8 @@ export interface Task {
   endDate: string;
   dependencies: string[]; // Array of task IDs that this task depends on
   status: 'not-started' | 'in-progress' | 'completed';
+  assignedTo?: string; // User ID or email
+  completionImage?: string; // URL to uploaded image
   createdAt: string;
   updatedAt: string;
 }

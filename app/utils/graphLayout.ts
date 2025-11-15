@@ -87,5 +87,3 @@ export function calculateNodePositions(tasks: Task[]): Map<string, { x: number; 
 
   return positions;
 }
-
-export default calculateNodePositions;

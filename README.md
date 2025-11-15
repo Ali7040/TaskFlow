@@ -1,29 +1,38 @@
 # TaskFlow - Project Management Network Diagram
 
-A modern, interactive project management tool that visualizes task dependencies using network diagrams. Built with Next.js 16, React Flow, Tailwind CSS, and Clerk authentication.
+A modern, collaborative project management tool that visualizes task dependencies using network diagrams. Built with Next.js 16, React Flow, MongoDB, Tailwind CSS, and Clerk authentication.
 
 ## ✨ Features
 
-- � **User Authentication** - Secure login with Clerk (Email, Google, GitHub, etc.)
-- �📊 **Interactive Network Diagram** - Visualize task dependencies in real-time
+### Core Features
+- 🔐 **User Authentication** - Secure login with Clerk (Email, Google, GitHub, etc.)
+- 📊 **Interactive Network Diagram** - Visualize task dependencies in real-time
+- 🗂️ **Multi-Project Support** - Create and manage multiple projects
+- 👥 **Team Collaboration** - Invite members and assign roles
+- 🎭 **Role-Based Access** - Owner, Manager, and Viewer permissions
 - ✅ **Task Management** - Create, Read, Update, Delete tasks with ease
 - 🔗 **Dependency Tracking** - Visual connections between related tasks
 - 📅 **Date Management** - Beautiful date picker with range selection
-- � **Assignee Management** - Assign tasks to team members
-- 🎯 **Priority Levels** - Low, Medium, High priority indicators
-- 📈 **Status Tracking** - Not Started, In Progress, Completed, Blocked
-- 💾 **Data Persistence** - Currently uses localStorage (database setup guide included)
+- 📈 **Status Tracking** - Not Started, In Progress, Completed
+- 💾 **MongoDB Database** - Persistent data storage with MongoDB
 - 📤 **Export/Import** - Save and load project data as JSON
 - 🎨 **Modern UI** - Beautiful gradients, animations, and shadcn/ui components
+- 🔔 **Toast Notifications** - Elegant Sonner toast notifications
 - 📱 **Responsive Design** - Works seamlessly on all devices
 
-## � Getting Started
+### Team Collaboration
+- **Owner**: Full control over project, tasks, and team
+- **Manager**: Can manage tasks and invite members
+- **Viewer**: Read-only access to project and tasks
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ installed
 - npm or yarn package manager
 - A Clerk account (free tier available at [clerk.com](https://clerk.com))
+- MongoDB Atlas account or local MongoDB (see [MongoDB Setup Guide](./MONGODB_SETUP.md))
 
 ### Quick Setup
 
@@ -39,14 +48,21 @@ npm install
 ```
 
 3. **Set up environment variables**:
-   - Copy `.env.local` and add your Clerk keys
-   - Get keys from [Clerk Dashboard](https://dashboard.clerk.com)
+   - Copy `.env.example` to `.env.local`
+   - Add your Clerk keys from [Clerk Dashboard](https://dashboard.clerk.com)
+   - Add your MongoDB connection string
    ```env
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
    CLERK_SECRET_KEY=sk_test_...
+   MONGODB_URI=mongodb+srv://...
    ```
 
-4. **Run the development server**:
+4. **Configure MongoDB**:
+   - Follow the detailed [MongoDB Setup Guide](./MONGODB_SETUP.md)
+   - Create a free MongoDB Atlas cluster
+   - Get your connection string and add to `.env.local`
+
+5. **Run the development server**:
 ```bash
 npm run dev
 ```
