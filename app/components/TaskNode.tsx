@@ -44,8 +44,8 @@ const TaskNode = memo(({ data }: NodeProps<TaskNodeData>) => {
 
   return (
     <div className={`group relative bg-white rounded-xl shadow-lg border-2 ${config.border} min-w-[280px] max-w-[320px] hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 overflow-hidden`}>
-      {/* Animated gradient overlay */}
-      <div className="absolute inset-0 bg-linear-to-br from-blue-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      {/* Animated overlay */}
+      <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
       
       <Handle
         type="target"

@@ -160,7 +160,7 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-linear-to-r from-blue-50 to-indigo-50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-blue-50">
           <h2 className="text-2xl font-bold text-gray-900">
             {task ? 'Edit Task' : 'Create New Task'}
           </h2>
@@ -399,7 +399,7 @@ export default function TaskForm({ task, allTasks, onSave, onClose }: TaskFormPr
           </Button>
           <Button
             onClick={handleSubmit}
-            className="flex-1 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all"
           >
             <Sparkles className="w-4 h-4 mr-2" />
             {task ? 'Update Task' : 'Create Task'}
