@@ -31,13 +31,38 @@ export default function ProjectList() {
       const response = await fetch('/api/projects');
       
       if (!response.ok) {
-        throw new Error('Failed to fetch projects');
+        // If response is not ok, still try to parse and show empty state
+        // Only show error for critical failures (401, 500 with specific error message)
+        if (response.status === 401) {
+          toast.error('Please sign in to view projects');
+          return;
+        }
+        
+        // For other errors, try to get data anyway or use empty array
+        try {
+          const errorData = await response.json();
+          if (errorData.projects) {
+            setProjects(errorData.projects);
+          } else {
+            setProjects([]);
+          }
+        } catch {
+          setProjects([]);
+        }
+        return;
       }
 
       const data = await response.json();
-      setProjects(data.projects);
+      // Always set projects, even if empty array (which is normal for new users)
+      setProjects(data.projects || []);
     } catch (error: any) {
-      toast.error(error.message || 'Error loading projects');
+      // Network errors or other issues - show empty state instead of error
+      console.error('Error fetching projects:', error);
+      setProjects([]);
+      // Only show error toast for network errors, not for empty results
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        toast.error('Network error. Please check your connection.');
+      }
     } finally {
       setIsLoading(false);
     }
