@@ -89,3 +89,4 @@ export function calculateNodePositions(tasks: Task[]): Map<string, { x: number; 
 }
 
 export default calculateNodePositions;
+

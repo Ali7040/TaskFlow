@@ -17,7 +17,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import { Task } from '@/app/types';
-import { calculateNodePositions } from '@/app/utils/layout';
+import { calculateNodePositions } from '@/app/utils/computeLayout';
 import TaskNode from '@/app/components/TaskNode';
 import TaskForm from '@/app/components/TaskForm';
 import Sidebar from '@/app/components/Sidebar';
