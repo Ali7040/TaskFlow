@@ -138,7 +138,7 @@ export default function ProjectList() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Header Navigation */}
       <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between shadow-sm sticky top-0 z-10">
         <div>
@@ -158,7 +158,7 @@ export default function ProjectList() {
           )}
           <Button
             onClick={() => setShowCreateForm(true)}
-            className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg"
+            className="bg-blue-600 hover:bg-blue-700 shadow-lg"
           >
             <Plus className="w-5 h-5 mr-2" />
             New Project
@@ -177,14 +177,14 @@ export default function ProjectList() {
         {/* Projects Grid */}
         {projects.length === 0 ? (
           <div className="text-center py-20">
-            <div className="w-24 h-24 bg-linear-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Folder className="w-12 h-12 text-blue-600" />
             </div>
             <h3 className="text-2xl font-bold text-gray-900 mb-2">No projects yet</h3>
             <p className="text-gray-600 mb-6">Create your first project to get started</p>
             <Button
               onClick={() => setShowCreateForm(true)}
-              className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="bg-blue-600 hover:bg-blue-700"
             >
               <Plus className="w-5 h-5 mr-2" />
               Create Project
@@ -202,7 +202,7 @@ export default function ProjectList() {
                 >
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 bg-linear-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
                         <Folder className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex items-center gap-2">

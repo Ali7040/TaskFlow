@@ -16,7 +16,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
           "--success-bg": "var(--green-500)",
-          "--toast-action-bg": "linear-gradient(to right, #3b82f6, #6366f1)",
+          "--toast-action-bg": "#3b82f6",
           "--toast-action-text": "#fff",
         } as React.CSSProperties
       }
